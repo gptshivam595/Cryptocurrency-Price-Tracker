@@ -1,135 +1,69 @@
-# Crypto Price Tracker API
+# Crypto Price Tracker (Python Flask Version)
 
-A Next.js-based application that provides a cryptocurrency market data API. It fetches real-time data from CoinGecko and exposes authenticated endpoints with support for pagination and multi-currency conversion (INR & CAD).
+This directory contains the Python Flask implementation of the Cryptocurrency Market Updates App, structured using the MVC pattern.
 
-## Features
+## Prerequisites
 
-- **List Coins**: Fetch a paginated list of cryptocurrencies.
-- **Categories**: Retrieve available cryptocurrency categories.
-- **Market Data**: Get real-time market data for specific coins or categories, including current price and market cap in **INR** and **CAD**.
-- **Authentication**: Secure API endpoints using an API Key or Bearer Token.
-- **Documentation**: Integrated Swagger UI for interactive API exploration.
-- **Unit Tests**: Comprehensive test coverage (>90%) using Jest.
+- Python 3.8+
+- `pip` (Python package installer)
 
-## Tech Stack
+## Setup
 
-- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
-- **Language**: TypeScript
-- **Data Source**: [CoinGecko API](https://www.coingecko.com/en/api)
-- **Testing**: Jest, React Testing Library
-- **Documentation**: Swagger UI (`next-swagger-doc`, `swagger-ui-react`)
-- **Styling**: Tailwind CSS
+1.  Navigate to this directory:
+    ```bash
+    cd using_python
+    ```
 
-## Getting Started
+2.  (Optional but recommended) Create and activate a virtual environment:
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    ```
 
-### Prerequisites
+3.  Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-- Node.js (v18 or higher)
-- npm
+## Running the Application
 
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd crypto-price-tracker
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Set up environment variables:
-   Create a `.env.local` file in the root directory (optional, defaults provided for demo):
-   ```env
-   API_KEY=secure-token
-   ```
-
-### Running the Application
-
-Start the development server:
+Start the Flask development server:
 
 ```bash
-npm run dev
+python run.py
 ```
 
-The application will be available at `http://localhost:3000`.
+The server will start at `http://localhost:5000`.
 
-## API Documentation
+## Running Tests
 
-Interactive API documentation is available at:
-**[http://localhost:3000/docs](http://localhost:3000/docs)**
-
-### Authentication
-
-All API endpoints (except documentation) require authentication. You must provide one of the following headers:
-
-- **x-api-key**: `secure-token` (or your configured key)
-- **Authorization**: `Bearer secure-token`
-
-### Endpoints
-
-#### 1. List Coins
-`GET /api/coins`
-
-Parameters:
-- `page` (optional, default: 1): Page number.
-- `per_page` (optional, default: 10): Items per page.
-
-Example:
-```bash
-curl -H "x-api-key: secure-token" "http://localhost:3000/api/coins?page=1&per_page=5"
-```
-
-#### 2. List Categories
-`GET /api/categories`
-
-Example:
-```bash
-curl -H "x-api-key: secure-token" "http://localhost:3000/api/categories"
-```
-
-#### 3. Market Data
-`GET /api/market`
-
-Parameters (at least one required):
-- `ids`: Comma-separated list of coin IDs (e.g., `bitcoin,ethereum`).
-- `category`: Category ID (e.g., `layer-1`).
-
-Response includes `current_price_inr`, `current_price_cad`, `market_cap_inr`, `market_cap_cad`.
-
-Example:
-```bash
-curl -H "x-api-key: secure-token" "http://localhost:3000/api/market?ids=bitcoin"
-```
-
-## Testing
-
-Run the unit tests:
+To run the unit tests, verify the API endpoints:
 
 ```bash
-npm test
+# Ensure you are in the workspace root or set PYTHONPATH
+export PYTHONPATH=$PYTHONPATH:$(pwd)
+python tests.py
 ```
 
-Check test coverage:
+## API Endpoints
 
-```bash
-npm test -- --coverage
-```
+-   `GET /api/health`: Check if the API and CoinGecko service are reachable.
+-   `GET /api/categories`: List coin categories.
+-   `GET /api/coins`: List coins (supports `page` and `per_page` query params).
+-   `GET /api/market`: Get market data for coins.
+    -   Query Params:
+        -   `ids`: Comma-separated list of coin IDs (e.g., `bitcoin,ethereum`).
+        -   `category`: Category ID.
+    -   Returns merged data with `current_price_inr`, `current_price_cad`, etc.
 
-Current coverage is **>95%**.
+## Structure
 
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── api/            # API Routes (coins, categories, market, docs)
-│   ├── docs/           # Swagger UI page
-│   └── page.tsx        # Landing page
-├── lib/
-│   ├── coingecko.ts    # CoinGecko API helper functions
-│   └── swagger.ts      # Swagger configuration
-├── middleware.ts       # Authentication middleware
-```
+-   `run.py`: Application entry point.
+-   `app/`: Main application directory.
+    -   `__init__.py`: App factory and blueprint registration.
+    -   `controllers/`: Request handlers (Controllers).
+        -   `main_controller.py`: API routes.
+    -   `services/`: Business logic (Services).
+        -   `coingecko_service.py`: Interaction with CoinGecko API.
+-   `tests.py`: Unit tests.
+-   `requirements.txt`: Project dependencies.
