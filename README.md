@@ -45,6 +45,20 @@ export PYTHONPATH=$PYTHONPATH:$(pwd)
 python tests.py
 ```
 
+## Running with Docker
+
+1.  Build the Docker image:
+    ```bash
+    docker build -t crypto-tracker .
+    ```
+
+2.  Run the container:
+    ```bash
+    docker run -p 5000:5000 crypto-tracker
+    ```
+
+The application will be available at `http://localhost:5000`.
+
 ## API Endpoints
 
 -   `GET /api/health`: Check if the API and CoinGecko service are reachable.
