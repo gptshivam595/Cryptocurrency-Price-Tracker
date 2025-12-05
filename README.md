@@ -1,6 +1,6 @@
-# Crypto Price Tracker (Python Flask Version)
+# Crypto Price Tracker
 
-This directory contains the Python Flask implementation of the Cryptocurrency Market Updates App, structured using the MVC pattern.
+This project contains the Python Flask implementation of the Cryptocurrency Market Updates App, structured using the MVC pattern.
 
 ## Prerequisites
 
@@ -11,16 +11,17 @@ This directory contains the Python Flask implementation of the Cryptocurrency Ma
 
 1.  Navigate to this directory:
     ```bash
-    cd using_python
+    git clone https://github.com/gptshivam595/Cryptocurrency-Price-Tracker
+    cd Cryptocurrency-Price-Tracker
     ```
 
-2.  (Optional but recommended) Create and activate a virtual environment:
+3.  (Optional but recommended) Create and activate a virtual environment:
     ```bash
     python3 -m venv venv
     source venv/bin/activate  # On Windows use `venv\Scripts\activate`
     ```
 
-3.  Install dependencies:
+4.  Install dependencies:
     ```bash
     pip install -r requirements.txt
     ```
